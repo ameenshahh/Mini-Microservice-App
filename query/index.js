@@ -12,7 +12,7 @@ app.get("/posts", (req, res) => {
   res.send(posts)
 });
 
-app.post("/events", async (req, res) => {
+app.post("/events", (req, res) => {
   const { type, data } = req.body;
 
   if (type === "PostCreated") {
@@ -22,8 +22,7 @@ app.post("/events", async (req, res) => {
   }
 
   if (type === "CommentCreated") {
-    const {id,content,postId} = req.body
-
+    const {id,content,postId} = data
     const post = posts[postId]
     post.comments.push({id,content})
   }
@@ -35,3 +34,4 @@ app.post("/events", async (req, res) => {
 app.listen(4002, () => {
   console.log(`listening on PORT 4002`);
 });
+
